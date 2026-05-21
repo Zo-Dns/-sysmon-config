@@ -4,21 +4,27 @@ sysmonconfig-export.xml (edit) SwiftOnSecurity التعديل على نسخة
 number 4.90  عدلنا عليه وغيرنا الرقم 
 ---------------------------------
   Clipboard - Event 24 تفعيل مراقبة النسخ واللصق
+-----------------------------
   Process Tampering - Event 25 تفعيل مراقبة التلاعب بالعمليات
 ------------------------------------------------
+
 IBM registry events https://www.ibm.com/docs/en/qradar-common?topic=endpoint-configure-windows-endpoints اضفنا قواعد IBM
+-----------------------
 with our 3 rls اضنف قواعدنا الخاصة ايضا معها 
+   
     ms-settings\shell\open\command Hijacks fodhelper.exe via ms-settings handler, no UAC prompt shown
     Mscfile\shell\open\command  Hijacks eventvwr.exe auto-elevation via Mscfile handler
     fodhelper  Direct modification of fodhelper registry key for privilege escalation
     --------------------------------------------------
+    
 Add event 27 اضافة الحدث
  27 Execution Prevention: تمنع هذه القاعدة تشغيل أي ملفات تنفيذية داخل المجلدات المؤقتة (Temp) لتقليل فرص عمل البرمجيات الخبيثة.
  F-Name C:\Windows\Temp\ and \AppData\Local\Temp\
  27 Exclusion Policies: تستثني هذه القاعدة برامج النظام والعمليات الموثوقة من هذا المنع لضمان استقرار أداء ويندوز وتطبيقاته الرسمية.
  in the code بداخل الكود معلومات كاملة عن الاستنثاء لهذه القاعدة والحدث
 
----------------English 
+---------------
+English 
 Sysmon Configuration Documentation
 
 Base Configuration: SwiftOnSecurity/sysmon-config (Version 74)
