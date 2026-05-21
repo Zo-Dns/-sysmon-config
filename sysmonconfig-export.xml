@@ -304,7 +304,6 @@
 			<Image condition="image">powershell.exe</Image> <!--Windows: PowerShell interface-->
 			<Image condition="image">powershell_ise.exe</Image> <!--Windows: PowerShell interface-->
 			<Image condition="image">qprocess.exe</Image> <!--Windows: [ https://www.first.org/resources/papers/conf2017/APT-Log-Analysis-Tracking-Attack-Tools-by-Audit-Policy-and-Sysmon.pdf ] -->
-			<Image condition="image">qwinsta.exe</Image> <!--Windows: Query remote sessions | Credit @ion-storm -->
 			<Image condition="image">qwinsta.exe</Image> <!--Windows: Remotely query login sessions on a server or workstation | Credit @ion-storm -->
 			<Image condition="image">reg.exe</Image> <!--Windows: Remote Registry editing ability | Credit @ion-storm -->
 			<Image condition="image">regsvcs.exe</Image> <!--Windows: [ https://www.hybrid-analysis.com/sample/3f94d7080e6c5b8f59eeecc3d44f7e817b31562caeba21d02ad705a0bfc63d67?environmentId=100 ] -->
@@ -534,7 +533,6 @@
 			<TargetFilename condition="begin with">C:\Windows\AppPatch\Custom</TargetFilename> <!--Windows: Application compatibility shims [ https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html ] -->
 			<TargetFilename condition="contains">VirtualStore</TargetFilename> <!--Windows: UAC virtualization [ https://blogs.msdn.microsoft.com/oldnewthing/20150902-00/?p=91681 ] -->
 			<!--Exploitable file names-->
-			<TargetFilename condition="end with">.xls</TargetFilename> <!--Legacy Office files are often used for attacks-->
 			<TargetFilename condition="end with">.ppt</TargetFilename> <!--Legacy Office files are often used for attacks-->
 			<TargetFilename condition="end with">.rtf</TargetFilename> <!--RTF files often 0day malware vectors when opened by Office-->
 		</FileCreate>
@@ -698,6 +696,14 @@
 			<!--Windows UAC tampering-->
 			<TargetObject name="T1088" condition="end with">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA</TargetObject> <!--Detect: UAC Tampering | Credit @ion-storm -->
 			<TargetObject name="T1088" condition="end with">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy</TargetObject> <!--Detect: UAC Tampering | Credit @ion-storm -->
+			<!--Windows UAC Bypass Techniques(Add 2026 Zo-Dns & IBM)-->
+            <TargetObject name="Alert,UACBypass" condition="contains">\Environment\</TargetObject> <!-- https://www.ibm.com/docs/en/qradar-common?topic=endpoint-configure-windows-endpoints -->
+            <TargetObject name="Alert,UACBypass" condition="contains">\CurVer</TargetObject>
+            <TargetObject name="Alert,UACBypass" condition="contains">\URL Protocol</TargetObject>
+            <TargetObject name="Alert,UACBypass" condition="contains">\ICM\Calibration</TargetObject>
+            <TargetObject name="Alert,UACBypass,Fodhelper" condition="contains">ms-settings\shell\open\command</TargetObject> <!-- Hijacks fodhelper.exe via ms-settings handler, no UAC prompt shown-->
+            <TargetObject name="Alert,UACBypass,Mscfile" condition="contains">Mscfile\shell\open\command</TargetObject> <!-- Hijacks eventvwr.exe auto-elevation via Mscfile handler-->
+            <TargetObject name="Alert,UACBypass,Fodhelper" condition="contains">fodhelper</TargetObject> <!-- Direct modification of fodhelper registry key for privilege escalation-->
 			<!--Microsoft Security Center tampering | Credit @ion-storm -->
 			<TargetObject name="T1089,Tamper-SecCenter" condition="end with">HKLM\Software\Microsoft\Security Center\</TargetObject> <!-- [ https://attack.mitre.org/wiki/Technique/T1089 ] -->
 			<TargetObject name="T1089,Tamper-SecCenter" condition="end with">SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCAHealth</TargetObject> <!--Windows:Security Center: Malware sometimes disables [ https://blog.avast.com/2013/08/12/your-documents-are-corrupted-from-image-to-an-information-stealing-trojan/ ] -->
@@ -993,7 +999,6 @@
 			<QueryName condition="is">cdnjs.cloudflare.com</QueryName> <!--Cloudflare: Hosts popular javascript libraries-->
 			<QueryName condition="is">fonts.googleapis.com</QueryName> <!--Google fonts-->
 			<QueryName condition="end with">.typekit.net</QueryName> <!--Adobe fonts-->
-			<QueryName condition="is">cdnjs.cloudflare.com</QueryName>
 			<QueryName condition="end with">.stackassets.com</QueryName> <!--Stack Overflow-->
 			<QueryName condition="end with">.steamcontent.com</QueryName>
 			<QueryName condition="is">play.google.com</QueryName>
@@ -1018,7 +1023,6 @@
 			<QueryName condition="end with">.adsymptotic.com</QueryName> <!--Ads-->
 			<QueryName condition="end with">.advertising.com</QueryName> <!--Ads | Microsoft default exclusion-->
 			<QueryName condition="end with">.agkn.com</QueryName> <!--Ads | [ https://www.home.neustar/privacy ] -->
-			<QueryName condition="end with">.amazon-adsystem.com</QueryName> <!--Ads-->
 			<QueryName condition="end with">.amazon-adsystem.com</QueryName> <!--Ads-->
 			<QueryName condition="end with">.analytics.yahoo.com</QueryName> <!--Ads:Yahoo-->
 			<QueryName condition="end with">.aol.com</QueryName> <!--Ads | Microsoft default exclusion -->
@@ -1125,19 +1129,13 @@
 			<QueryName condition="is">ocsp.godaddy.com</QueryName>
 			<QueryName condition="is">ocsp.int-x3.letsencrypt.org</QueryName>
 			<QueryName condition="is">ocsp.msocsp.com</QueryName> <!--Microsoft:OCSP-->
-			<QueryName condition="end with">pki.goog</QueryName>
-			<QueryName condition="is">ocsp.godaddy.com</QueryName>
 			<QueryName condition="end with">amazontrust.com</QueryName>
 			<QueryName condition="is">ocsp.sectigo.com</QueryName>
 			<QueryName condition="is">pki-goog.l.google.com</QueryName>
-			<QueryName condition="end with">.usertrust.com</QueryName>
-			<QueryName condition="is">ocsp.comodoca.com</QueryName>
 			<QueryName condition="is">ocsp.verisign.com</QueryName>
-			<QueryName condition="is">ocsp.entrust.net</QueryName>
-			<QueryName condition="end with">ocsp.identrust.com</QueryName>
 			<QueryName condition="is">status.rapidssl.com</QueryName>
 			<QueryName condition="is">status.thawte.com</QueryName>
-			<QueryName condition="is">ocsp.int-x3.letsencrypt.org</QueryName>
+			
 		</DnsQuery>
 	</RuleGroup>
 
@@ -1190,11 +1188,35 @@
 	</RuleGroup>
 	
 
-	<!--SYSMON EVENT ID 255 : ERROR-->
+	<!--SYSMON EVENT ID 25 : ERROR-->
 		<!--"This event is generated when an error occurred within Sysmon. They can happen if the system is under heavy load
 			and certain tasked could not be performed or a bug exists in the Sysmon service. You can report any bugs on the
 			Sysinternals forum or over Twitter (@markrussinovich)."-->
 		<!--Cannot be filtered.-->
+
+		<!--SYSMON EVENT ID 26 : FILE BLOCK EXECUTABLE [FileBlockExecutable]-->
+	<!--COMMENT:	Prevents executables from being written to high-risk temporary directories.
+		These locations are commonly abused by malware for staging, dropper execution, and living-off-the-land attacks. -->
+
+	<!--SECURITY LOGIC:
+		BLOCK any executable dropped into:
+		- C:\Windows\Temp\         : System-level temp, no legitimate program should drop EXEs here
+		- %AppData%\Local\Temp\    : User-level temp, common malware staging area
+
+		ALLOW executables from trusted system processes:
+		- msiexec.exe              : Windows Installer, extracts EXEs to Temp during .msi package installation
+		- TrustedInstaller.exe     : Windows system super-admin, required for core OS component updates
+		- wusa.exe                 : Windows Update Standalone Installer, stages security patches in Temp
+		- C:\Program Files\        : Official trusted installation zone, blocking would break legitimate software
+		- C:\Program Files (x86)\  : Official trusted 32-bit installation zone, same reason as above
+
+		WARNING: Removing any of the exclude rules above will break:
+		- msiexec.exe              : All .msi software installations will fail
+		- TrustedInstaller.exe     : Windows component updates will stop completely
+		- wusa.exe                 : Security patches will fail to install, leaving system vulnerable
+		- Program Files paths      : Browsers, games, and large applications that use Temp as a staging area-->
+
+	<!--DATA: UtcTime, ProcessGuid, ProcessId, Image, TargetFilename, Hashes-->
 <RuleGroup name="" groupRelation="or">
     <FileBlockExecutable onmatch="include">
         <TargetFilename condition="begin with">C:\Windows\Temp\</TargetFilename>
