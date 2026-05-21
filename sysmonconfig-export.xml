@@ -1194,7 +1194,7 @@
 			Sysinternals forum or over Twitter (@markrussinovich)."-->
 		<!--Cannot be filtered.-->
 
-		<!--SYSMON EVENT ID 26 : FILE BLOCK EXECUTABLE [FileBlockExecutable]-->
+		<!--SYSMON EVENT ID 27 : FILE BLOCK EXECUTABLE [FileBlockExecutable]-->
 	<!--COMMENT:	Prevents executables from being written to high-risk temporary directories.
 		These locations are commonly abused by malware for staging, dropper execution, and living-off-the-land attacks. -->
 
