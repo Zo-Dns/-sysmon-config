@@ -10,7 +10,7 @@ number 4.90  نسخة المخطط المعدلة
 
 IBM registry events https://www.ibm.com/docs/en/qradar-common?topic=endpoint-configure-windows-endpoints اضفنا قواعد IBM
 -----------------------
-with our 3 rls اضنف قواعدنا الخاصة ايضا معها 
+with our 3 rls اضفنا قواعدنا الخاصة ايضا معها 
    
     ms-settings\shell\open\command Hijacks fodhelper.exe via ms-settings handler, no UAC prompt shown
     Mscfile\shell\open\command  Hijacks eventvwr.exe auto-elevation via Mscfile handler
